@@ -30,7 +30,8 @@ export const uploadProfileImage = async (
     const storageRef = ref(storage, filePath)
     const uploadTask = uploadBytesResumable(storageRef, file)
 
-    uploadTask.on(
+    return new Promise<string>((resolve, reject) => {
+      uploadTask.on(
       "state_changed",
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
@@ -38,15 +39,15 @@ export const uploadProfileImage = async (
       },
       (error) => {
         console.error("Upload error:", error)
-        throw error
+        reject(error)
       },
       async () => {
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref)
-        return downloadURL
+        const downloadURL = await getDownloadURL(storageRef)
+        resolve(downloadURL)
       },
     )
+    });
 
-    return await getDownloadURL(uploadTask.snapshot.ref)
   } catch (error) {
     console.error("Error uploading profile image to Firebase Storage:", error)
     throw error
@@ -66,7 +67,8 @@ export const uploadNewsEventMedia = async (
     const storageRef = ref(storage, filePath)
     const uploadTask = uploadBytesResumable(storageRef, file)
 
-    uploadTask.on(
+    return new Promise<string>((resolve, reject) => {
+      uploadTask.on(
       "state_changed",
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
@@ -74,15 +76,15 @@ export const uploadNewsEventMedia = async (
       },
       (error) => {
         console.error("Upload error:", error)
-        throw error
+        reject(error)
       },
       async () => {
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref)
-        return downloadURL
+        const downloadURL = await getDownloadURL(storageRef)
+        resolve(downloadURL)
       },
     )
+    })
 
-    return await getDownloadURL(uploadTask.snapshot.ref)
   } catch (error) {
     console.error("Error uploading news event media to Firebase Storage:", error)
     throw error
