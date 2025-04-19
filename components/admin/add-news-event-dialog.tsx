@@ -41,7 +41,6 @@ export function AddNewsEventDialog({ open, onOpenChange, onAddNewsEvent }: AddNe
     title: "",
     type: "news" as "news" | "event",
     category: "",
-    location: "",
     publishDate: new Date(),
     eventDate: undefined as Date | undefined,
     author: "",
@@ -115,10 +114,6 @@ export function AddNewsEventDialog({ open, onOpenChange, onAddNewsEvent }: AddNe
 
     if (!formData.category.trim()) {
       newErrors.category = "Category is required"
-    }
-
-    if (!formData.location.trim()) {
-      newErrors.location = "Location is required"
     }
 
     if (!formData.author.trim()) {
@@ -230,7 +225,6 @@ export function AddNewsEventDialog({ open, onOpenChange, onAddNewsEvent }: AddNe
         title: formData.title,
         type: formData.type,
         category: formData.category,
-        location: formData.location,
         publishDate: formattedPublishDate,
         eventDate: formattedEventDate,
         author: formData.author,
@@ -328,7 +322,6 @@ export function AddNewsEventDialog({ open, onOpenChange, onAddNewsEvent }: AddNe
       title: "",
       type: "news",
       category: "",
-      location: "",
       publishDate: new Date(),
       eventDate: undefined,
       author: "",
@@ -408,21 +401,6 @@ export function AddNewsEventDialog({ open, onOpenChange, onAddNewsEvent }: AddNe
                     className={errors.category ? "border-destructive" : ""}
                   />
                   {errors.category && <p className="text-sm text-destructive">{errors.category}</p>}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="location" className={errors.location ? "text-destructive" : ""}>
-                    Location
-                  </Label>
-                  <Input
-                    id="location"
-                    name="location"
-                    value={formData.location}
-                    onChange={handleInputChange}
-                    placeholder="Enter location"
-                    className={errors.location ? "border-destructive" : ""}
-                  />
-                  {errors.location && <p className="text-sm text-destructive">{errors.location}</p>}
                 </div>
               </div>
 
